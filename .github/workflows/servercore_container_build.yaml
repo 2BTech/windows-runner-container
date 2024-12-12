@@ -1,13 +1,13 @@
 name: Servercore Container Build and Push
 
-on:
-  push:
-    tags:
-      - v1.*
+on: workflow_dispatch
+  # push:
+  #   tags:
+  #     - v*
 
 jobs:
   build-and-deploy:
-    runs-on: windows-2019
+    runs-on: windows-2022
     env:
       RUNNER_VERSION: 2.291.1
 
@@ -23,7 +23,7 @@ jobs:
           password: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Build the Dockerfile
-        run: docker build -t ghcr.io/antgrutta/winrunner:${{ github.ref_name }} --build-arg RUNNER_VERSION=${{env.RUNNER_VERSION}} .
+        run: docker build -t ghcr.io/2btech/winrunner:${{ github.ref_name }} --build-arg RUNNER_VERSION=${{env.RUNNER_VERSION}} .
 
       - name: Push to GitHub Container Registry
-        run: docker push ghcr.io/antgrutta/winrunner:${{ github.ref_name }}
+        run: docker push ghcr.io/2btech/winrunner:${{ github.ref_name }}
